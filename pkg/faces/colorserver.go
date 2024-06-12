@@ -20,6 +20,7 @@ package faces
 import (
 	"fmt"
 	"net/http"
+	"net/http/httputils"
 	"time"
 
 	"github.com/BuoyantIO/faces-demo/v2/pkg/utils"
@@ -55,6 +56,12 @@ func (srv *ColorServer) SetupFromEnvironment() {
 }
 
 func (srv *ColorServer) colorGetHandler(r *http.Request, rstat *BaseRequestStatus) *BaseServerResponse {
+	res, err := httputils.DumpRequest(r, true)
+	if err != nil {
+		fmt.Printf("Error dumping request: %v\n", err)
+	}
+	fmt.Printf("%s %s: %s\n", time.Now().Format(time.RFC3339), srv.Name, res)
+
 	// The only error we need to handle here is the internal rate limiter.
 	if rstat.ratelimited {
 		errstr := fmt.Sprintf("Rate limited (%.1f RPS > max %.1f RPS)", srv.CurrentRate(), srv.maxRate)
