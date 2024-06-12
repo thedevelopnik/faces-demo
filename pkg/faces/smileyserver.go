@@ -20,7 +20,7 @@ package faces
 import (
 	"fmt"
 	"net/http"
-	"net/http/httputils"
+	"net/http/httputil"
 	"time"
 
 	"github.com/BuoyantIO/faces-demo/v2/pkg/utils"
@@ -64,7 +64,7 @@ func (srv *SmileyServer) SetupFromEnvironment() {
 }
 
 func (srv *SmileyServer) smileyGetHandler(r *http.Request, rstat *BaseRequestStatus) *BaseServerResponse {
-	res, err := httputils.DumpRequest(r, true)
+	res, err := httputil.DumpRequest(r, true)
 	if err != nil {
 		fmt.Printf("Error dumping request: %v\n", err)
 	}
